@@ -35,8 +35,8 @@ const App = () => {
     }
 
     const call = async () => {
-        const videoTracks = localStream.getVideoTracks();
-        const audioTracks = localStream.getAudioTracks();
+        // const videoTracks = localStream.getVideoTracks();
+        // const audioTracks = localStream.getAudioTracks();
 
         // console.log({ videoTracks, audioTracks })
         pc1 = new RTCPeerConnection({})
@@ -46,7 +46,9 @@ const App = () => {
         pc1.addEventListener('iceconnectionstatechange', e => onIceStateChange(pc1, e));
         pc2.addEventListener('iceconnectionstatechange', e => onIceStateChange(pc2, e));
         pc2.addEventListener('track', gotRemoteStream);
+
         localStream.getTracks().forEach(track => pc1.addTrack(track, localStream));
+
         try {
             // console.log('pc1 createOffer start');
             const offer = await pc1.createOffer(offerOptions);
@@ -134,9 +136,9 @@ const App = () => {
         return (pc === pc1) ? pc2 : pc1;
     }
 
-    const getName = (pc) => {
-        return (pc === pc1) ? 'pc1' : 'pc2';
-    }
+    // const getName = (pc) => {
+    //     return (pc === pc1) ? 'pc1' : 'pc2';
+    // }
 
     const onIceCandidate = async (pc, event) => {
         try {
